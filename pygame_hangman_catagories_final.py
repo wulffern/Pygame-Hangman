@@ -1,6 +1,7 @@
 #ruya kumru-holroyd
 #pygame hangman
 
+import json
 import pygame, sys, random
 from time import sleep
 from pygame.locals import *
@@ -179,16 +180,16 @@ def hangman():
         textBoxSpace = 5
         
         text = pygame.font.Font("freesansbold.ttf",20)
-        textSurf = text.render("Choose a catagory",True,black)
+        textSurf = text.render("Choose a category",True,black)
         textRect = textSurf.get_rect()
         textRect.center = ((width/2),(height/2))
         screen.blit(textSurf, textRect)
 
-        button("Animals",150,450,150,100,black,lightgrey,Animals)
-        button("Vehicles",550,450,150,100,black,lightgrey,Vehicles)
-        button("Food",150,50,150,100,black,lightgrey,Foods)
-        button("Sports",550,50,150,100,black,lightgrey,Sports)
-                    
+        #button("Animals",150,450,150,100,black,lightgrey,Animals)
+        #button("Vehicles",550,450,150,100,black,lightgrey,Vehicles)
+        #button("Horse",350,450,150,100,black,lightgrey,Horse)
+        #button("Sports",550,450,150,100,black,lightgrey,Sports)
+        Horse()            
         pygame.display.update()
         clock.tick(fps)
 
@@ -196,7 +197,7 @@ def hangmanGame(catagory,title):
     global pause, pick, pickSplit, textBoxSpace, textBoxNumber, start
     start = timer()
     chances = 20
-    pick = random.choice(catagory)
+    pick = random.choice(catagory).lower()
     pickSplit = [pick[i:i+1] for i in range(0, len(pick), 1)]
     
     screen.fill(white)
@@ -1257,6 +1258,13 @@ def Foods():
     print("food")
     title = "Foods"
     hangmanGame(food,title)
+
+def Horse():
+    horsesfile = "horses.json"
+    with open(horsesfile) as json_file:  
+        horses = json.load(json_file)
+    title = "Horses"
+    hangmanGame(horses,title)
     
 def Sports():
     sport = ['rugby','football','netball','basketball','swimming','hockey','curling','running','golf','tennis','badmington','archery','volleyball','bowling','dancing','gym','skating','baseball','rounders','boxing','climbing','canoe','cycling','fencing','karate','shooting','cricket']
